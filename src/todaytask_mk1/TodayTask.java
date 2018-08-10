@@ -1,7 +1,6 @@
 package todaytask_mk1;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,26 +23,29 @@ public class TodayTask extends JFrame{
 	public TodayTask(){
 		
 		// title 설정
-		Font titlefont = new Font(null, Font.BOLD, 20);
+		// 타이틀 폰트 설정
+//		Font titlefont = new Font(null, Font.BOLD, 20);
+		// 타이틀 lable 생성
 		JLabel titlelabel = new JLabel("Today Task");
-		titlelabel.setFont(titlefont);
+		// 타이틀 lable 에 폰트 설정 입력
+		titlelabel.setFont(new Font(null, Font.BOLD, 20));
 		// title panel 생성 및 글자 넣기
 		JPanel titlePanel = new JPanel();
 		titlePanel.add(titlelabel);
 		
 		
-		// 항릴 추가한 내용 넣는 panel
+		// 할일 추가한 내용 넣는 panel
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		// 테이블 만들기
-		Object header[] = {" "};
+		Object column[] = {" "};
 		Object contents[][] = null;
-		DefaultTableModel model = new DefaultTableModel(contents, header);
-		JTable table = new JTable(model);
+		final DefaultTableModel model = new DefaultTableModel(contents, column);
+		final JTable table = new JTable(model);
 		// 테이블 세부 옵션 조정
-		table.setRowHeight(25);
-		Font tablefont = new Font(null, Font.PLAIN, 15);
-		table.setFont(tablefont);
+		table.setRowHeight(45);
+//		Font tablefont = new Font(null, Font.PLAIN, 15);
+		table.setFont(new Font(null, Font.PLAIN, 15));
 		
 		JScrollPane contentjp = new JScrollPane(table);
 		contentPanel.add(contentjp);
@@ -53,12 +55,11 @@ public class TodayTask extends JFrame{
 		JPanel inputTextPanel = new JPanel();
 		inputTextPanel.setLayout(new BoxLayout(inputTextPanel, BoxLayout.X_AXIS));
 		// 텍스트필드 생성
-		JTextField textfield = new JTextField(2);
+		final JTextField textfield = new JTextField();
 		// add 버튼 생성
 		JButton addBtn = new JButton("+ Add");
 		addBtn.addActionListener(new ActionListener() {
 			
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				String inputStr[] = new String[1];
 				inputStr[0] = textfield.getText();
@@ -71,7 +72,6 @@ public class TodayTask extends JFrame{
 		JButton deleteBtn = new JButton("- Done");
 		deleteBtn.addActionListener(new ActionListener() {
 			
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(table.getSelectedRow() == -1) {
 					return;
