@@ -22,6 +22,7 @@ public class TodayTask extends JFrame{
 	
 	public TodayTask(){
 		
+		JPanel titlePanel = new JPanel();
 		// title 설정
 		// 타이틀 폰트 설정
 //		Font titlefont = new Font(null, Font.BOLD, 20);
@@ -30,7 +31,6 @@ public class TodayTask extends JFrame{
 		// 타이틀 lable 에 폰트 설정 입력
 		titlelabel.setFont(new Font(null, Font.BOLD, 20));
 		// title panel 생성 및 글자 넣기
-		JPanel titlePanel = new JPanel();
 		titlePanel.add(titlelabel);
 		
 		
@@ -38,8 +38,8 @@ public class TodayTask extends JFrame{
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		// 테이블 만들기
-		Object column[] = {" "};
-		Object contents[][] = null;
+		Object[][] contents = null;
+		Object[] column = {" "};
 		final DefaultTableModel model = new DefaultTableModel(contents, column);
 		final JTable table = new JTable(model);
 		// 테이블 세부 옵션 조정
