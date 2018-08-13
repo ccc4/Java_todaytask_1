@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.LinkedList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,10 +14,12 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-public class Main extends JFrame{
+public class Home {
 
-	public Main() throws ClassNotFoundException, IOException {
-		SaveClass saveClass = new SaveClass();
+	public Home() throws Exception {
+		JFrame jFrame = new JFrame("Test");
+		
+		
 		
 		// 버튼넣을 틀 제작
 		JPanel inputPanel = new JPanel();
@@ -27,11 +28,17 @@ public class Main extends JFrame{
 		JTextField textField = new JTextField();
 		JButton addBtn = new JButton("Add");
 		addBtn.addActionListener(new ActionListener() {
-
 			public void actionPerformed(ActionEvent e) {
 				String getText = textField.getText();
+				SaveClass savec = null;
 				try {
-					saveClass.saver(getText);
+					savec = new SaveClass();
+				} catch (ClassNotFoundException | IOException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				try {
+					savec.saver(getText);
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -55,10 +62,10 @@ public class Main extends JFrame{
 		Object header[] = {" "};
 		Object contents[][] = null;
 		DefaultTableModel model = new DefaultTableModel(contents, header);
-		LinkedList<String> loader = saveClass.loader();
-		for(int i=0;i<loader.size();i++) {
-			
-		}
+//		LinkedList<String> loader = saveClass.loader();
+//		for(int i=0;i<loader.size();i++) {
+//			
+//		}
 		
 		JTable jTable = new JTable(model);
 		JScrollPane sp = new JScrollPane(jTable);
@@ -74,18 +81,17 @@ public class Main extends JFrame{
 		articlePanel.add(contentPanel);
 		
 		// 1 큰틀. 메인아티클을 갖고있는다.
-		add(articlePanel, BorderLayout.NORTH);
+		jFrame.add(articlePanel, BorderLayout.NORTH);
 		
 		// 0 기본틀. 초기설정
-		setTitle("ToDo List_Test");
-		setLocation(100, 100);
-		setSize(300, 300);
-		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jFrame.setLocation(100, 100);
+		jFrame.setSize(300, 300);
+		jFrame.setVisible(true);
+		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
 	
-	public static void main(String[] args) {
-		new Main();
+	public static void main(String[] args) throws Exception {
+		new Home();
 	}
 }

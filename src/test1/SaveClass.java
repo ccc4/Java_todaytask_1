@@ -2,7 +2,6 @@ package test1;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,8 +9,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.util.LinkedList;
 
 public class SaveClass {
@@ -58,7 +55,7 @@ public class SaveClass {
 								new FileOutputStream(file)));
 		
 		out.writeObject(aTrain);
-		
+		System.out.println("넣기체크");
 		out.close();
 		in.close();
 	}
