@@ -40,8 +40,8 @@ public class TodayTask extends JFrame{
 		// 테이블 만들기
 		Object[][] contents = null;
 		Object[] column = {" "};
-		final DefaultTableModel model = new DefaultTableModel(contents, column);
-		final JTable table = new JTable(model);
+		DefaultTableModel model = new DefaultTableModel(contents, column);
+		JTable table = new JTable(model);
 		// 테이블 세부 옵션 조정
 		table.setRowHeight(45);
 //		Font tablefont = new Font(null, Font.PLAIN, 15);
