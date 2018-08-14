@@ -12,39 +12,41 @@ import java.util.LinkedList;
 
 public class T2_Class {
 	LinkedList<String> contents;
-	private File file = new File("data.txt");
-	
-	
+	private File file = new File("data.dat");
+
 	public T2_Class() throws IOException, ClassNotFoundException {
-		
-		if(!file.exists()) {
+
+		if (!file.exists()) {
 			file.createNewFile();
 		}
-		
-		ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
-		
-		if(in.readObject() == null) {
-			this.contents = new LinkedList<>();
-		} else {
-			this.contents = (LinkedList<String>) in.readObject();
+		ObjectInputStream in = null;
+		try {
+			in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
+			if (in.readObject() == null) {
+				this.contents = new LinkedList<>();
+			} else {
+				this.contents = (LinkedList<String>) in.readObject();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		in.close();
 	}
-	
+
 	public synchronized LinkedList<String> load() throws InterruptedException {
 		this.wait();
 		return this.contents;
 	}
-	
+
 	public synchronized void input(String getText) {
 		this.contents.add(getText);
 		this.notifyAll();
 	}
-	
+
 	public synchronized void output() throws FileNotFoundException, IOException, InterruptedException {
 		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-		
+
 		out.writeObject(contents);
 		out.flush();
 		System.out.println("저장완료");
