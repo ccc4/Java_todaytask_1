@@ -1,10 +1,10 @@
-package test1;
+package test2;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.LinkedList;
 
 import javax.swing.BoxLayout;
@@ -16,15 +16,11 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-public class Home extends JFrame{
-
-	public Home() throws Exception {
-		SaveClass svc = new SaveClass();
-		
-		
-		
-		
-		
+public class Home2 extends JFrame{
+	T2_Class t2c;
+	
+	public Home2(T2_Class t2c) throws Exception {
+		this.t2c = t2c;
 		
 		// 내용 불러오는곳
 		JPanel contentPanel = new JPanel();
@@ -34,15 +30,19 @@ public class Home extends JFrame{
 		Object contents[][] = null;
 		DefaultTableModel model = new DefaultTableModel(contents, header);
 		
-		LinkedList<String> loader = svc.loader();
-		String[] inputStr = new String[1];
-		for(int i=0;i<loader.size();i++) {
-			inputStr[0] = loader.get(i);
-			System.out.println(inputStr[0]);
-			model.addRow(inputStr);
+		LinkedList<String> loader = t2c.load();
+		if(loader != null) {
+			String[] inputStr = new String[1];
+			for(int i=0;i<loader.size();i++) {
+				inputStr[0] = loader.get(i);
+//			System.out.println(inputStr[0]);
+				model.addRow(inputStr);
+			}
 		}
 		
 		JTable jTable = new JTable(model);
+		jTable.setRowHeight(45);
+		jTable.setFont(new Font(null, Font.ITALIC, 15));
 		JScrollPane sp = new JScrollPane(jTable);
 		contentPanel.add(sp);
 		
@@ -62,13 +62,7 @@ public class Home extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				
 				String getText = textField.getText();
-				try {
-					svc.saver(getText);
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				
-				
+				t2c.input(getText);
 				
 				
 				textField.setText("");
@@ -101,7 +95,7 @@ public class Home extends JFrame{
 		add(c, BorderLayout.NORTH);
 		
 		// 0 기본틀. 초기설정
-		setTitle("투두");
+		setTitle("ToDo List");
 		setLocation(100, 100);
 		setSize(300, 300);
 		setVisible(true);
@@ -110,6 +104,12 @@ public class Home extends JFrame{
 	}
 	
 	public static void main(String[] args) throws Exception {
-		new Home();
+		T2_Class t2c = new T2_Class();
+		Loader loader = new Loader(t2c);
+		Saver saver = new Saver(t2c);
+		loader.start();
+		saver.start();
+		
+		new Home2(t2c);
 	}
 }

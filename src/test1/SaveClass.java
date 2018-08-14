@@ -12,10 +12,10 @@ import java.io.ObjectOutputStream;
 import java.util.LinkedList;
 
 public class SaveClass {
-	String dirName = "." + File.separator;
-	String fileName = "Test_1_Save.txt";
-	File dir = new File(dirName);
-	File file = new File(dir, fileName);
+	private String dirName = "." + File.separator;
+	private String fileName = "Test_1_Save.txt";
+	private File dir = new File(dirName);
+	private File file = new File(dir, fileName);
 	
 	LinkedList<String> aTrain;
 	
@@ -35,13 +35,21 @@ public class SaveClass {
 		in = new ObjectInputStream(
 					new BufferedInputStream(
 							new FileInputStream(file)));
-		
-		if(!in.readBoolean()) {
+		System.out.println(in.readObject());
+		if(in.readObject() == null) {
 			aTrain = new LinkedList<>();
 		} else {
 			aTrain = (LinkedList<String>) in.readObject();
 		}
 	}
+	
+	
+	
+	public LinkedList<String> loader() throws ClassNotFoundException, IOException {
+		return (LinkedList<String>) in.readObject();
+	}
+	
+	
 	
 	public void saver(String getText) throws FileNotFoundException, IOException {
 		String[] inputStr = new String[1];
@@ -56,11 +64,8 @@ public class SaveClass {
 		
 		out.writeObject(aTrain);
 		System.out.println("넣기체크");
-		out.close();
-		in.close();
+//		out.close();
+//		in.close();
 	}
 	
-	public LinkedList<String> loader() throws ClassNotFoundException, IOException {
-		return (LinkedList<String>) in.readObject();
-	}
 }
