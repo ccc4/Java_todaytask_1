@@ -1,4 +1,4 @@
-package test2;
+package test3;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -16,15 +16,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-public class Home2 extends JFrame{
-	T2_Class t2c;
+public class Home3 extends JFrame{
 	
-	public void init(T2_Class t2c) {
-		this.t2c = t2c;
-	}
-	
-	public Home2() throws Exception {
-		
+	public Home3() throws Exception {
 		
 		// 내용 불러오는곳
 		JPanel contentPanel = new JPanel();
@@ -42,18 +36,6 @@ public class Home2 extends JFrame{
 		contentPanel.add(sp);
 		
 		
-		LinkedList<String> loader;
-		if(t2c.load() == null) {
-			loader = new LinkedList<>();
-		} else {
-			loader = t2c.load();
-			String[] inputStr = new String[1];
-			for(int i=0;i<loader.size();i++) {
-				inputStr[0] = loader.get(i);
-//			System.out.println(inputStr[0]);
-				model.addRow(inputStr);
-			}		
-		}
 		
 		
 		
@@ -65,18 +47,6 @@ public class Home2 extends JFrame{
 		// input,btn2 제작
 		JTextField textField = new JTextField();
 		JButton addBtn = new JButton("Add");
-		addBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				String getText = textField.getText();
-				t2c.input(getText);
-				
-				
-				textField.setText("");
-				textField.requestFocus();
-				
-			}
-		});
 		JButton deleteBtn = new JButton("Delete");
 		
 		
@@ -111,13 +81,7 @@ public class Home2 extends JFrame{
 	}
 	
 	public static void main(String[] args) throws Exception {
-		Home2 home2 = new Home2();
-		T2_Class t2c = new T2_Class();
-		home2.init(t2c);
-		Loader loader = new Loader(t2c);
-		Saver saver = new Saver(t2c);
-		loader.start();
-		saver.start();
 		
+		new Home3();
 	}
 }
