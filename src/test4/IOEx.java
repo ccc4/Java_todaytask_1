@@ -24,8 +24,8 @@ class AA implements Serializable {
 public class IOEx {	
 	public static void main(String[] args) throws Exception {
 		System.out.println("프로그램 시작");
-		String dirName = "C:\\자바평일반\\DataIOTest";
-		String fileName = "Object01.dat";
+		String dirName = ".\\";
+		String fileName = "Object01.txt";
 		
 		File dir = new File(dirName);				
 		File file = new File(dir, fileName);

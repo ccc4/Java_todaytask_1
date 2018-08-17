@@ -24,16 +24,23 @@ class Item implements Serializable {
 	public void setModel(DefaultTableModel model) {
 		this.model = model;
 	}
+
+	public DefaultTableModel getModel() {
+		return model;
+	}
+	
+	
 }
 
-public class PPAP {
-	File file = new File("ppap.txt");
+public class Station {
+	File file;
 	DefaultTableModel model;
 	ObjectInputStream in;
-	Item item = new Item();
+	Item item;
 	
-	public PPAP() throws IOException, ClassNotFoundException {
-		
+	public Station() throws IOException, ClassNotFoundException {
+		item = new Item();
+		file = new File("test4.txt");
 		if(!file.exists()) {
 			file.createNewFile();
 		}
@@ -47,7 +54,9 @@ public class PPAP {
 			output(item);
 		} else {
 			in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
-			this.model = (DefaultTableModel) in.readObject();
+			item = (Item) in.readObject();
+			this.model = item.getModel();
+			in.close();
 		}
 		check.close();
 	}
@@ -63,24 +72,26 @@ public class PPAP {
 	public void output(Item item) throws FileNotFoundException, IOException {
 		ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
 		out.writeObject(item);
+		System.out.println("output ¿Ï·á");
 		out.close();
 	}
 	
-//	public void loader() throws FileNotFoundException, IOException, ClassNotFoundException {
-//		in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
-//		this.model = (DefaultTableModel) in.readObject();
-//		System.out.println(this.model.getValueAt(0, 0));
-//	}
-	
-	public void test(String str) throws IOException {
-	OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(file));
-	out.write(str);
+	public void loader() throws FileNotFoundException, IOException, ClassNotFoundException {
+		in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
+		item = (Item) in.readObject();
+		for(int i = 0;i<item.getModel().getRowCount();i++) {
+			System.out.println(item.getModel().getValueAt(i, 0));
+			
+		}
 	}
 	
+	
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
-		PPAP ppap = new PPAP();
+//		Item item = new Item();
 		
-		ppap.input("Hi");
-		ppap.test("Hello");
+		Station station = new Station();
+		station.loader();
+		
+		
 	}
 }
