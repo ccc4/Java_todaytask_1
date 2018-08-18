@@ -23,7 +23,7 @@ public class Index extends JFrame {
 	JTable table;
 	Station station;
 	public Index() throws ClassNotFoundException, IOException {
-		setTitle("ToDo List");
+		setTitle("Today Task");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = getContentPane();
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -37,6 +37,16 @@ public class Index extends JFrame {
 		JPanel titlePanel = new JPanel();
 		titlePanel.add(titleLabel);
 		
+		
+		// contents
+				JPanel contentPanel = new JPanel();
+				contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+				model = station.getModel();
+				JTable table = new JTable(model);
+				table.setRowHeight(30);
+				table.setFont(new Font(null, Font.PLAIN, 15));
+				contentPanel.add(new JScrollPane(table));
+				
 		
 		// functions
 		JPanel inputOutputPanel = new JPanel();
@@ -52,11 +62,11 @@ public class Index extends JFrame {
 					station.addContent(textField.getText());
 				} catch (IOException e1) {
 					e1.printStackTrace();
-					System.out.println("input error");
+					System.out.println("addBtn error");
 				}
 				
 				textField.setText("");
-				model = station.getModel(); 
+//				model = station.getModel(); 
 			}
 		});
 		// create delBtn
@@ -64,12 +74,19 @@ public class Index extends JFrame {
 		delBtn.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(table.getSelectedRow());
-				if(table.getSelectedRow() == -1) {
+				int getRow = table.getSelectedRow();
+				System.out.println(getRow);
+				if(getRow == -1) {
 					return;
-				}else {
-					model.removeRow(table.getSelectedRow());
+				} else {
+					try {
+						station.delContent(table.getSelectedRow());
+					} catch (IOException e1) {
+						e1.printStackTrace();
+						System.out.println("delBtn error");
+					}
 				}
+				
 			}
 		});
 		
@@ -77,16 +94,6 @@ public class Index extends JFrame {
 		inputOutputPanel.add(textField);
 		inputOutputPanel.add(addBtn);
 		inputOutputPanel.add(delBtn);
-		
-		
-		// contents
-		JPanel contentPanel = new JPanel();
-		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-		model = station.getModel();
-		JTable table = new JTable(model);
-		table.setRowHeight(45);
-		table.setFont(new Font(null, Font.PLAIN, 15));
-		contentPanel.add(new JScrollPane(table));
 		
 		
 		

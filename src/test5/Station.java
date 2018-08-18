@@ -60,14 +60,10 @@ public class Station {
 	}
 	
 	public void delContent(int getRow) throws FileNotFoundException, IOException {
-		if(getRow == -1) {
-			return;
-		} else {
-			model.removeRow(getRow);
-			item.setModel(model);
-			output(item);
-			System.out.println("delContent success!");
-		}
+		model.removeRow(getRow);
+		item.setModel(model);
+		output(item);
+		System.out.println("delContent success!");
 	}
 	
 	public void output(Item item) throws FileNotFoundException, IOException {

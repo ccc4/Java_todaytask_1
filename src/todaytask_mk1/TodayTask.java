@@ -43,8 +43,7 @@ public class TodayTask extends JFrame{
 		DefaultTableModel model = new DefaultTableModel(contents, column);
 		JTable table = new JTable(model);
 		// 테이블 세부 옵션 조정
-		table.setRowHeight(45);
-//		Font tablefont = new Font(null, Font.PLAIN, 15);
+		table.setRowHeight(25);
 		table.setFont(new Font(null, Font.PLAIN, 15));
 		
 		JScrollPane contentjp = new JScrollPane(table);
