@@ -22,6 +22,7 @@ public class Index extends JFrame {
 	DefaultTableModel model;
 	JTable table;
 	Station station;
+	JTextField textField;
 	public Index() throws ClassNotFoundException, IOException {
 		setTitle("Today Task");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,36 +40,25 @@ public class Index extends JFrame {
 		
 		
 		// contents
-				JPanel contentPanel = new JPanel();
-				contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-				model = station.getModel();
-				JTable table = new JTable(model);
-				table.setRowHeight(30);
-				table.setFont(new Font(null, Font.PLAIN, 15));
-				contentPanel.add(new JScrollPane(table));
+		JPanel contentPanel = new JPanel();
+		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+		model = station.getModel();
+		JTable table = new JTable(model);
+		table.setRowHeight(30);
+		table.setFont(new Font(null, Font.PLAIN, 15));
+		contentPanel.add(new JScrollPane(table));
 				
 		
 		// functions
 		JPanel inputOutputPanel = new JPanel();
 		inputOutputPanel.setLayout(new BoxLayout(inputOutputPanel, BoxLayout.X_AXIS));
 		// create textField 
-		final JTextField textField = new JTextField();
+//		JTextField textField = new JTextField();
+		textField = new JTextField();
+		textField.addActionListener(new addBtnListener());
 		// create addBtn
 		JButton addBtn = new JButton("+ Add");
-		addBtn.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				try {
-					station.addContent(textField.getText());
-				} catch (IOException e1) {
-					e1.printStackTrace();
-					System.out.println("addBtn error");
-				}
-				
-				textField.setText("");
-//				model = station.getModel(); 
-			}
-		});
+		addBtn.addActionListener(new addBtnListener());
 		// create delBtn
 		JButton delBtn = new JButton("- Del");
 		delBtn.addActionListener(new ActionListener() {
@@ -96,11 +86,10 @@ public class Index extends JFrame {
 		inputOutputPanel.add(delBtn);
 		
 		
-		
+		textField.requestFocus();
 		add(titlePanel);
 		add(inputOutputPanel);
 		add(contentPanel);
-		
 		
 		setLocation(100, 100);
 		setSize(300, 500);
@@ -110,4 +99,23 @@ public class Index extends JFrame {
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 		new Index();
 	}
+	
+	class addBtnListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			try {
+				station.addContent(textField.getText());
+			} catch (IOException e1) {
+				e1.printStackTrace();
+				System.out.println("addBtn error");
+			}
+			
+			textField.setText("");
+			textField.requestFocus();
+//			model = station.getModel();
+		}
+		
+	}
+	
 }
