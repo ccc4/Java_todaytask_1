@@ -41,6 +41,7 @@ public class Station {
 		if(check.readLine() == null) {
 			item = new Item();
 			output(item);
+			model = item.getModel();
 		} else {
 			in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
 			item = (Item) in.readObject();
@@ -50,12 +51,23 @@ public class Station {
 		check.close();
 	}
 	
-	public void input(String getText) throws FileNotFoundException, IOException {
+	public void addContent(String getText) throws FileNotFoundException, IOException {
 		inputStr[0] = getText;
 		model.addRow(inputStr);
 		item.setModel(model);
 		output(item);
-		System.out.println("input success!");
+		System.out.println("addContent success!");
+	}
+	
+	public void delContent(int getRow) throws FileNotFoundException, IOException {
+		if(getRow == -1) {
+			return;
+		} else {
+			model.removeRow(getRow);
+			item.setModel(model);
+			output(item);
+			System.out.println("delContent success!");
+		}
 	}
 	
 	public void output(Item item) throws FileNotFoundException, IOException {

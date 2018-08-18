@@ -48,11 +48,15 @@ public class Index extends JFrame {
 		addBtn.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-//				String inputStr[] = new String[1];
-//				inputStr[0] = textField.getText();
-//				model.addRow(inputStr);
-//				
-//				textField.setText("");
+				try {
+					station.addContent(textField.getText());
+				} catch (IOException e1) {
+					e1.printStackTrace();
+					System.out.println("input error");
+				}
+				
+				textField.setText("");
+				model = station.getModel(); 
 			}
 		});
 		// create delBtn
@@ -60,13 +64,15 @@ public class Index extends JFrame {
 		delBtn.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-//				if(table.getSelectedRow() == -1) {
-//					return;
-//				}else {
-//					model.removeRow(table.getSelectedRow());
-//				}
+				System.out.println(table.getSelectedRow());
+				if(table.getSelectedRow() == -1) {
+					return;
+				}else {
+					model.removeRow(table.getSelectedRow());
+				}
 			}
 		});
+		
 		// inputTextPanel ¿¡ Ãß°¡
 		inputOutputPanel.add(textField);
 		inputOutputPanel.add(addBtn);
@@ -76,7 +82,7 @@ public class Index extends JFrame {
 		// contents
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-		this.model = station.getModel();
+		model = station.getModel();
 		JTable table = new JTable(model);
 		table.setRowHeight(45);
 		table.setFont(new Font(null, Font.PLAIN, 15));
