@@ -18,11 +18,13 @@ import javax.swing.table.DefaultTableModel;
 
 
 public class Index extends JFrame {
-	Container contentPane;
-	DefaultTableModel model;
-	JTable table;
 	Station station;
+	DefaultTableModel model;
+	Container contentPane;
+	JTable table;
 	JTextField textField;
+	
+	
 	public Index() throws ClassNotFoundException, IOException {
 		setTitle("Today Task");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,7 +45,7 @@ public class Index extends JFrame {
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		model = station.getModel();
-		JTable table = new JTable(model);
+		table = new JTable(model);
 		table.setRowHeight(30);
 		table.setFont(new Font(null, Font.PLAIN, 15));
 		contentPanel.add(new JScrollPane(table));
@@ -61,24 +63,7 @@ public class Index extends JFrame {
 		addBtn.addActionListener(new addBtnListener());
 		// create delBtn
 		JButton delBtn = new JButton("- Del");
-		delBtn.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
-				int getRow = table.getSelectedRow();
-				System.out.println(getRow);
-				if(getRow == -1) {
-					return;
-				} else {
-					try {
-						station.delContent(table.getSelectedRow());
-					} catch (IOException e1) {
-						e1.printStackTrace();
-						System.out.println("delBtn error");
-					}
-				}
-				
-			}
-		});
+		delBtn.addActionListener(new delBtnListener());
 		
 		// inputTextPanel 에 추가
 		inputOutputPanel.add(textField);
@@ -91,8 +76,8 @@ public class Index extends JFrame {
 		add(inputOutputPanel);
 		add(contentPanel);
 		
-		setLocation(100, 100);
 		setSize(300, 500);
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 	
@@ -105,7 +90,13 @@ public class Index extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				station.addContent(textField.getText());
+				String text = textField.getText();
+				if(text.trim().length() == 0) {
+					System.out.println("텍스트를 입력해주세요.");
+					return;
+				} else {
+					station.addContent(text);
+				}
 			} catch (IOException e1) {
 				e1.printStackTrace();
 				System.out.println("addBtn error");
@@ -113,7 +104,28 @@ public class Index extends JFrame {
 			
 			textField.setText("");
 			textField.requestFocus();
-//			model = station.getModel();
+//			model = station.getModel(); // 안써도 되네
+		}
+		
+	}
+	
+	class delBtnListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int getRow = table.getSelectedRow();
+			if(getRow == -1) {
+				System.out.println("선택된 목록이 없습니다.");
+				return;
+			} else {
+				try {
+					station.delContent(table.getSelectedRow());
+				} catch (IOException e1) {
+					e1.printStackTrace();
+					System.out.println("delBtn error");
+				}
+			}
+			
 		}
 		
 	}

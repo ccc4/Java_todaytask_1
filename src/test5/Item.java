@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.swing.table.DefaultTableModel;
 
 public class Item implements Serializable {
-	DefaultTableModel model;
+	private DefaultTableModel model;
 
 	public DefaultTableModel getModel() {
 		return model;

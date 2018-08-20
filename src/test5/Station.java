@@ -15,12 +15,11 @@ import java.io.ObjectOutputStream;
 import javax.swing.table.DefaultTableModel;
 
 public class Station {
-	File file;
-	
-	Item item;
+	private File file;
+	private Item item;
 	private DefaultTableModel model;
-	String[] inputStr = new String[1];
-	ObjectInputStream in;
+	private String[] inputStr = new String[1];
+	private ObjectInputStream in;
 	
 	
 	public DefaultTableModel getModel() {
@@ -60,8 +59,17 @@ public class Station {
 	}
 	
 	public void delContent(int getRow) throws FileNotFoundException, IOException {
+//		System.out.println(model.getRowCount());
+//		System.out.println(item.getModel().getRowCount());
+		
 		model.removeRow(getRow);
-		item.setModel(model);
+		
+//		System.out.println(model.getRowCount());
+		
+		
+//		System.out.println(item.getModel().getRowCount());
+		item.setModel(model); 
+//		System.out.println(item.getModel().getRowCount());
 		output(item);
 		System.out.println("delContent success!");
 	}
@@ -69,6 +77,7 @@ public class Station {
 	public void output(Item item) throws FileNotFoundException, IOException {
 		ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
 		out.writeObject(item);
+		out.flush();
 		System.out.println("output success!");
 		out.close();
 	}
