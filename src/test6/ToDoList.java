@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -32,15 +33,12 @@ public class MainFrame extends JFrame {
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 		
 		
-		
-		// title
 		JLabel titleLabel = new JLabel("Today Task");
 		titleLabel.setFont(new Font(null, Font.BOLD, 20));
 		JPanel titlePanel = new JPanel();
 		titlePanel.add(titleLabel);
 		
 		
-		// contents
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		Object[][] contents = null;
@@ -54,28 +52,25 @@ public class MainFrame extends JFrame {
 		table = new JTable(model);
 		table.setRowHeight(30);
 		table.setFont(new Font(null, Font.PLAIN, 15));
-		table.getColumn("번호").setPreferredWidth(10);
-		table.getTableHeader().setReorderingAllowed(false);
-		table.getTableHeader().setResizingAllowed(false);
+		table.getColumn("할 일").setPreferredWidth(450);
+//		table.getTableHeader().setReorderingAllowed(false);
+//		table.getTableHeader().setResizingAllowed(false);
 		
 		contentPanel.add(new JScrollPane(table));
 		
 		
-		// functions
 		JPanel inputOutputPanel = new JPanel();
 		inputOutputPanel.setLayout(new BoxLayout(inputOutputPanel, BoxLayout.X_AXIS));
-		// create textField 
-//		JTextField textField = new JTextField();
+
 		textField = new JTextField();
 		textField.addActionListener(new addBtnListener());
-		// create addBtn
+		
 		JButton addBtn = new JButton("+ Add");
 		addBtn.addActionListener(new addBtnListener());
-		// create delBtn
+		
 		JButton delBtn = new JButton("- Del");
 		delBtn.addActionListener(new delBtnListener());
 		
-		// inputTextPanel 에 추가
 		inputOutputPanel.add(textField);
 		inputOutputPanel.add(addBtn);
 		inputOutputPanel.add(delBtn);
@@ -125,8 +120,8 @@ public class MainFrame extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-
+			station.delItem(table.getSelectedRow());
+			getList();
 		}
 
 	}
