@@ -18,7 +18,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 
-public class MainFrame extends JFrame {
+public class ToDoList extends JFrame {
 	Container contentPane;
 	JTable table;
 	JTextField textField;
@@ -26,7 +26,7 @@ public class MainFrame extends JFrame {
 	Station station;
 	DefaultTableModel model;
 	
-	public MainFrame() {
+	public ToDoList() {
 		super("Today Task");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = getContentPane();
@@ -90,7 +90,7 @@ public class MainFrame extends JFrame {
 	}
 	
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
-		new MainFrame();
+		new ToDoList();
 	}
 	
 	private void getList() {
